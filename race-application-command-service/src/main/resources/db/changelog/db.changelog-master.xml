@@ -4,8 +4,14 @@
         xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
                             http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">
 
+    <changeSet id="0-create-schema" author="brajnovic" dbms="postgresql">
+        <validCheckSum>ANY</validCheckSum>
+        <sql>CREATE SCHEMA IF NOT EXISTS race_management;</sql>
+    </changeSet>
+
     <changeSet id="1-create-race-table" author="brajnovic">
-        <createTable tableName="race">
+        <validCheckSum>ANY</validCheckSum>
+        <createTable tableName="race" schemaName="race_management">
             <column name="id" type="uuid">
                 <constraints primaryKey="true"/>
             </column>
@@ -19,7 +25,8 @@
     </changeSet>
 
     <changeSet id="2-create-application-table" author="brajnovic">
-        <createTable tableName="application">
+        <validCheckSum>ANY</validCheckSum>
+        <createTable tableName="application" schemaName="race_management">
             <column name="id" type="uuid">
                 <constraints primaryKey="true"/>
             </column>
@@ -37,7 +44,8 @@
     </changeSet>
 
     <changeSet id="3-create-users-table" author="brajnovic">
-        <createTable tableName="users">
+        <validCheckSum>ANY</validCheckSum>
+        <createTable tableName="users" schemaName="race_management">
             <column name="id" type="uuid">
                 <constraints primaryKey="true"/>
             </column>
@@ -53,45 +61,47 @@
         </createTable>
     </changeSet>
 
-    <changeSet id="4-insert-sample-data" author="brajnovic">
-        <insert tableName="race">
-            <column name="id" valueNumeric="00000000-0000-0000-0000-000000000001"/>
+    <changeSet id="4-insert-sample-data" author="brajnovic" dbms="postgresql">
+        <validCheckSum>ANY</validCheckSum>
+        <insert tableName="race" schemaName="race_management">
+            <column name="id" valueComputed="CAST('00000000-0000-0000-0000-000000000001' AS uuid)"/>
             <column name="name" value="Sample Marathon"/>
             <column name="distance" value="MARATHON"/>
         </insert>
-        <insert tableName="race">
-            <column name="id" valueNumeric="00000000-0000-0000-0000-000000000002"/>
+        <insert tableName="race" schemaName="race_management">
+            <column name="id" valueComputed="CAST('00000000-0000-0000-0000-000000000002' AS uuid)"/>
             <column name="name" value="Sample 10K"/>
             <column name="distance" value="TEN_K"/>
         </insert>
-        <insert tableName="users">
-            <column name="id" valueNumeric="11111111-1111-1111-1111-111111111111"/>
+        <insert tableName="users" schemaName="race_management">
+            <column name="id" valueComputed="CAST('11111111-1111-1111-1111-111111111111' AS uuid)"/>
             <column name="email" value="admin@admin.com"/>
             <column name="password" value="admin"/>
             <column name="role" value="ADMINISTRATOR"/>
         </insert>
-        <insert tableName="users">
-            <column name="id" valueNumeric="22222222-2222-2222-2222-222222222222"/>
+        <insert tableName="users" schemaName="race_management">
+            <column name="id" valueComputed="CAST('22222222-2222-2222-2222-222222222222' AS uuid)"/>
             <column name="email" value="user@user.com"/>
             <column name="password" value="user"/>
             <column name="role" value="APPLICANT"/>
         </insert>
     </changeSet>
 
-    <changeSet id="5-insert-application-data" author="brajnovic">
-        <insert tableName="application">
-            <column name="id" value="33333333-3333-3333-3333-333333333333"/>
+    <changeSet id="5-insert-application-data" author="brajnovic" dbms="postgresql">
+        <validCheckSum>ANY</validCheckSum>
+        <insert tableName="application" schemaName="race_management">
+            <column name="id" valueComputed="CAST('33333333-3333-3333-3333-333333333333' AS uuid)"/>
             <column name="first_name" value="Luka"/>
             <column name="last_name" value="Modric"/>
             <column name="club" value="GNK Dinamo"/>
-            <column name="race_id" value="00000000-0000-0000-0000-000000000001"/>
+            <column name="race_id" valueComputed="CAST('00000000-0000-0000-0000-000000000001' AS uuid)"/>
         </insert>
-        <insert tableName="application">
-            <column name="id" value="44444444-4444-4444-4444-444444444444"/>
+        <insert tableName="application" schemaName="race_management">
+            <column name="id" valueComputed="CAST('44444444-4444-4444-4444-444444444444' AS uuid)"/>
             <column name="first_name" value="Jacques"/>
             <column name="last_name" value="Houdek"/>
             <column name="club" value="Marathon Club"/>
-            <column name="race_id" value="00000000-0000-0000-0000-000000000002"/>
+            <column name="race_id" valueComputed="CAST('00000000-0000-0000-0000-000000000002' AS uuid)"/>
         </insert>
     </changeSet>
 
