@@ -105,4 +105,16 @@
         </insert>
     </changeSet>
 
+    <changeSet id="6-hash-existing-passwords" author="brajnovic" dbms="postgresql">
+        <validCheckSum>ANY</validCheckSum>
+        <update tableName="users" schemaName="race_management">
+            <column name="password" value="$2a$12$buM//S8Re.TOKAYjsjoOh.KNwCMqNaUgTzTV3qjxJH4PeIgIuckia"/>
+            <where>email = 'admin@admin.com'</where>
+        </update>
+        <update tableName="users" schemaName="race_management">
+            <column name="password" value="$2a$12$fdnbPB/rGo/kgdnoIo6Mk.HYo.eO/B4P7CwAHHVSVNj3o6yuKxNjW"/>
+            <where>email = 'user@user.com'</where>
+        </update>
+    </changeSet>
+
 </databaseChangeLog>

@@ -39,7 +39,9 @@ services:
       - race_network
 
   command-service:
-    build: ./race-application-command-service
+    build:
+      context: .
+      dockerfile: race-application-command-service/Dockerfile
     container_name: command_service
     depends_on:
       - postgres
