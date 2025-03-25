@@ -11,6 +11,7 @@
 
     <modules>
         <module>race-application-command-service</module>
+        <module>race_application_query_service</module>
     </modules>
 
     <properties>

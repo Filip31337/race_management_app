@@ -6,6 +6,7 @@ import lombok.*;
 import java.util.UUID;
 
 @Entity
+@Table(name = "race", schema = "race_management")
 @Getter
 @Setter
 @NoArgsConstructor

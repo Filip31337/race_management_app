@@ -56,8 +56,37 @@ services:
     networks:
       - race_network
 
+  cassandra:
+    image: cassandra:4.1
+    container_name: cassandra
+    environment:
+      CASSANDRA_START_RPC: "true"
+      CASSANDRA_RPC_PORT: 9160
+    ports:
+      - "9042:9042"
+    networks:
+      - race_network
+
+  query-service:
+    build:
+      context: .
+      dockerfile: race_application_query_service/Dockerfile
+    container_name: query_service
+    depends_on:
+      - kafka
+      - cassandra
+    environment:
+      SPRING_KAFKA_BOOTSTRAP_SERVERS: kafka:9092
+      SPRING_DATA_CASSANDRA_CONTACT_POINTS: cassandra
+      SPRING_DATA_CASSANDRA_PORT: 9042
+    ports:
+      - "8081:8081"
+    networks:
+      - race_network
+
 networks:
   race_network:
+    driver: bridge
 
 volumes:
   postgres_data:
