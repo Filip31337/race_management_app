@@ -8,6 +8,7 @@ import java.util.UUID;
 @RestController
 @RequestMapping("/command-service-api/applications")
 public class ApplicationController {
+
     private final ApplicationService applicationService;
 
     public ApplicationController(ApplicationService applicationService) {

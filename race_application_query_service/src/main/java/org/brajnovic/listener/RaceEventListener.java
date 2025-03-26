@@ -4,6 +4,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.brajnovic.event.RaceCreatedEvent;
 import org.brajnovic.event.RaceDeletedEvent;
 import org.brajnovic.event.RaceEvent;
+import org.brajnovic.event.RaceUpdatedEvent;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.stereotype.Service;
 import org.brajnovic.entity.RaceById;
@@ -19,18 +20,23 @@ public class RaceEventListener {
         this.raceByIdRepository = raceByIdRepository;
     }
 
-    @KafkaListener(topics = "race-events", groupId = "query-service")
+    @KafkaListener(topics = "race-events", groupId = "query-service-race",
+            containerFactory = "raceKafkaListenerContainerFactory")
     public void handleEvent(RaceEvent event) {
         log.info("Received event on KafkaListener, attempting to parse event.");
         if (event instanceof RaceCreatedEvent e) {
             log.info("Received RaceCreatedEvent: " + e);
             RaceById race = new RaceById(e.getRaceId(), e.getName(), e.getDistance());
             raceByIdRepository.save(race);
+        } else if (event instanceof RaceUpdatedEvent e) {
+            log.info("Received RaceUpdatedEvent: " + e);
+            RaceById race = new RaceById(e.getRaceId(), e.getName(), e.getDistance());
+            raceByIdRepository.save(race);
         } else if (event instanceof RaceDeletedEvent e) {
             log.info("Received RaceDeletedEvent: " + e);
             raceByIdRepository.deleteById(e.getRaceId());
         } else {
-            log.info("Received event of unknown type. Skipping logic.Class name of received object: " + event.getClass().getName());
+            log.info("Received event of unknown type. Skipping logic. Class name of received object: " + event.getClass().getName());
         }
     }
 }

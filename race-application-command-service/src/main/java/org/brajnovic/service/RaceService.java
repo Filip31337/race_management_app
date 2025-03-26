@@ -5,6 +5,7 @@ import org.brajnovic.entity.RaceDistance;
 import org.brajnovic.event.RaceCreatedEvent;
 import org.brajnovic.event.RaceDeletedEvent;
 import org.brajnovic.event.RaceEvent;
+import org.brajnovic.event.RaceUpdatedEvent;
 import org.brajnovic.repository.RaceRepository;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Service;
@@ -13,7 +14,9 @@ import java.util.UUID;
 
 @Service
 public class RaceService {
+
     private final RaceRepository raceRepository;
+
     private final KafkaTemplate<String, RaceEvent> kafkaTemplate;
 
     public RaceService(RaceRepository raceRepository, KafkaTemplate<String, RaceEvent> kafkaTemplate) {
@@ -48,7 +51,7 @@ public class RaceService {
         race.setDistance(distance);
         Race updated = raceRepository.save(race);
 
-        RaceCreatedEvent event = new RaceCreatedEvent(
+        RaceUpdatedEvent event = new RaceUpdatedEvent(
                 updated.getId(),
                 updated.getName(),
                 updated.getDistance().name()

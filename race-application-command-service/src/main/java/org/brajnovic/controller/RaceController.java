@@ -11,6 +11,7 @@ import java.util.UUID;
 @RestController
 @RequestMapping("/command-service-api/races")
 public class RaceController {
+
     private final RaceService raceService;
 
     public RaceController(RaceService raceService) {
