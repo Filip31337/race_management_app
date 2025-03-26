@@ -7,7 +7,7 @@ import java.util.List;
 import java.util.UUID;
 
 @RestController
-@RequestMapping("/api/query/races")
+@RequestMapping("/query-service-api/races")
 public class RaceQueryController {
 
     private final RaceByIdRepository raceRepo;

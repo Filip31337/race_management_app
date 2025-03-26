@@ -11,7 +11,7 @@ import java.util.List;
 import java.util.UUID;
 
 @RestController
-@RequestMapping("/api/query/applications")
+@RequestMapping("/query-service-api/applications")
 public class ApplicationQueryController {
 
     private final ApplicationByIdRepository applicationByIdRepository;
