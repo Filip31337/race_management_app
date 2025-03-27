@@ -2,11 +2,11 @@
     <mat-toolbar-row>
       <span class="title">Race Management</span>
     </mat-toolbar-row>
-    <mat-toolbar-row>
+    <mat-toolbar-row *ngIf="isLoggedIn">
       <div class="actions">
         <a mat-button routerLink="/races">All Races</a>
-        <a mat-button routerLink="/applications">All Applications</a>
-        <a mat-button routerLink="/my-applications">My Applications</a>
+        <a mat-button routerLink="/applications" *ngIf="authService.getRole() === 'ROLE_ADMINISTRATOR'">All Applications</a>
+        <a mat-button routerLink="/my-applications" *ngIf="authService.getRole() === 'ROLE_APPLICANT'">My Applications</a>
       </div>
     </mat-toolbar-row>
   </mat-toolbar>

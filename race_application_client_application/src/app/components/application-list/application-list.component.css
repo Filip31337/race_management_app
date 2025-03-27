@@ -3,6 +3,8 @@
     display: flex;
     flex-direction: column;
     align-items: center;
+    width: 400px;
+    margin: 0 auto;
   }
   
   .application-cards {
@@ -20,4 +22,7 @@
   .padding-left-2vw {
     padding-left: 2vw;
   }
-  
+
+  .application-cards .application-card:last-child {
+    margin-bottom: 10vh !important;
+  }

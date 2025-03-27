@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Application } from 'src/app/models/application.model';
 import { ApplicationService } from 'src/app/services/application.service';
+import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
   selector: 'app-application-list',
@@ -14,10 +15,18 @@ export class ApplicationListComponent implements OnInit {
   constructor(
     private applicationService: ApplicationService,
     private router: Router,
+    private authService: AuthService
   ) {}
 
   ngOnInit(): void {
-    this.applicationService.getAllApplications().subscribe(apps => this.applications = apps);
+    const role = this.authService.getRole(); 
+    if (role === 'ROLE_ADMINISTRATOR') {
+      console.log("(ApplicationListComponent) ngOnInit, entered admin condition! role: " + role);
+      this.applicationService.getAllApplications().subscribe(apps => this.applications = apps);
+    } else {
+      console.log("(ApplicationListComponent) ngOnInit, entered non-admin condition! role: " + role);
+      this.applicationService.getMyApplications().subscribe(apps => this.applications = apps);
+    }
   }
 
   deleteApplication(id: string): void {

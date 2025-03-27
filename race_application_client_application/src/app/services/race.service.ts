@@ -15,7 +15,13 @@ export class RaceService {
       const mockRaces: Race[] = [
          { id: '1', name: 'Mock Race 1', distance: '5K' },
          { id: '2', name: 'Mock Race 2', distance: '10K' },
-         { id: '3', name: 'Mock Race 3', distance: 'HalfMarathon' }
+         { id: '3', name: 'Mock Race 3', distance: 'HalfMarathon' },
+         { id: '4', name: 'Mock Race 4', distance: 'MARATHON' },
+         { id: '5', name: 'Mock Race 5', distance: '5K' },
+         { id: '6', name: 'Mock Race 6', distance: '10K' },
+         { id: '7', name: 'Mock Race 7', distance: 'MARATHON' },
+         { id: '8', name: 'Mock Race 8', distance: '10K' },
+         { id: '9', name: 'Mock Race 9', distance: '5K' },
       ];
       return of(mockRaces);
     }

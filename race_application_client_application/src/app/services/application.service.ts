@@ -15,11 +15,28 @@ export class ApplicationService {
     if (!environment.production) {
         const mockApplications: Application[] = [
           { id: 'a1', firstName: 'Alice', lastName: 'Smith', raceId: '1' },
-          { id: 'a2', firstName: 'Bob', lastName: 'Jones', raceId: '2' }
+          { id: 'a2', firstName: 'Bob', lastName: 'Jones', raceId: '2' },
+          { id: 'a3', firstName: 'Alice', lastName: 'Smith', raceId: '1' },
+          { id: 'a4', firstName: 'Bob', lastName: 'Jones', raceId: '2' },
+          { id: 'a5', firstName: 'Luisa', lastName: 'McGuire', raceId: '1' },
+          { id: 'a6', firstName: 'Darren', lastName: 'Smith', raceId: '1' },
+          { id: 'a7', firstName: 'Isabella', lastName: 'Fernandez', raceId: '1' },
+          { id: 'a8', firstName: 'Emory', lastName: 'Coffey', raceId: '2' }
         ];
         return of(mockApplications);
-      }
+    }
     return this.http.get<Application[]>(`${environment.queryApiUrl}/query-service-api/applications`);
+  }
+
+  getMyApplications(): Observable<Application[]> {
+    if (!environment.production) {
+      const mockApplications: Application[] = [
+        { id: 'a1', firstName: 'John', lastName: 'Smith', raceId: '1' },
+        { id: 'a2', firstName: 'John ', lastName: 'Smith', raceId: '2' }
+      ];
+      return of(mockApplications);
+  }
+    return this.http.get<Application[]>(`${environment.queryApiUrl}/query-service-api/applications/user`);
   }
 
   getApplication(id: string): Observable<Application> {
