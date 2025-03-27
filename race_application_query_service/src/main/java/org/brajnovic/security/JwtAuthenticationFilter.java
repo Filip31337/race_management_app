@@ -7,11 +7,14 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.Collections;
+
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.filter.OncePerRequestFilter;
 
+@Slf4j
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
     private final JwtUtil jwtUtil;
@@ -34,17 +37,24 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                 String role = claims.get("role", String.class);
                 UsernamePasswordAuthenticationToken authentication;
                 if (role != null && !role.isEmpty()) {
+                    log.info("(JwtAuthenticationFilter) - role detected: {}", role);
                     authentication = new UsernamePasswordAuthenticationToken(
                             subject,
                             null,
                             Collections.singletonList(new SimpleGrantedAuthority(role))
                     );
                 } else {
-                    authentication = new UsernamePasswordAuthenticationToken(subject, null, null);
+                    log.info("(JwtAuthenticationFilter) - no role present");
+                    authentication = new UsernamePasswordAuthenticationToken(subject, null, Collections.emptyList());
                 }
                 SecurityContextHolder.getContext().setAuthentication(authentication);
+            } else {
+                log.info("(JwtAuthenticationFilter) - token not valid");
             }
+        } else {
+            log.info("(JwtAuthenticationFilter) - no authentication header present");
         }
         filterChain.doFilter(request, response);
     }
 }
+

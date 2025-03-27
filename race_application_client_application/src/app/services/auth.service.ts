@@ -27,7 +27,7 @@ export class AuthService {
     this.checkInitialToken();
   }
 
-  private tokenKey = 'initialTokenValue';
+  private tokenKey = 'JWTtokenKey';
   
   private loggedInSubject = new BehaviorSubject<boolean>(false);
   loggedIn$ = this.loggedInSubject.asObservable();

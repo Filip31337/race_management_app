@@ -7,12 +7,12 @@
         <p>Distance: {{ race.distance }}</p>
       </mat-card-content>
       <mat-card-actions>
-        <button mat-button color="primary" (click)="apply(race.id)">Apply</button>
-        <button mat-button color="secondary" (click)="update(race.id)">Update</button>
-        <button mat-button color="secondary" (click)="remove(race.id)">Remove</button>
+        <button mat-button color="primary" (click)="apply(race.id)" *ngIf="authService.getRole() === 'ROLE_APPLICANT'">Apply</button>
+        <button mat-button color="secondary" (click)="update(race)" *ngIf="authService.getRole() === 'ROLE_ADMINISTRATOR'">Update</button>
+        <button mat-button color="secondary" (click)="remove(race.id)" *ngIf="authService.getRole() === 'ROLE_ADMINISTRATOR'">Remove</button>
       </mat-card-actions>
     </mat-card>
-    <mat-card class="race-card align-items-center margin-bottom-10vh">
+    <mat-card class="race-card align-items-center margin-bottom-10vh" *ngIf="authService.getRole() === 'ROLE_ADMINISTRATOR'">
       <mat-card-actions>
         <button mat-raised-button color="primary" (click)="createRace()">Create New Race</button>
       </mat-card-actions>

@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 import { Race } from '../models/race.model';
 import { of } from 'rxjs';
@@ -37,11 +37,17 @@ export class RaceService {
   }
 
   createRace(race: Partial<Race>) {
-    return this.http.post<Race>(`${environment.commandApiUrl}/command-service-api/races`, race);
+    const params = new HttpParams()
+    .set('name', race.name || '')
+    .set('distance', race.distance || '');
+    return this.http.post<Race>(`${environment.commandApiUrl}/command-service-api/races`, null, { params });
   }
 
   updateRace(id: string, race: Partial<Race>) {
-    return this.http.put<Race>(`${environment.commandApiUrl}/command-service-api/races/${id}`, race);
+    const params = new HttpParams()
+    .set('name', race.name || '')
+    .set('distance', race.distance || '');
+    return this.http.put<Race>(`${environment.commandApiUrl}/command-service-api/races/${id}`, null, { params });
   }
 
   deleteRace(id: string) {

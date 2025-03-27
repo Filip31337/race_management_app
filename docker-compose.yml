@@ -55,6 +55,12 @@ services:
       - "8080:8080"
     networks:
       - race_network
+    healthcheck:
+      test: [ "CMD", "curl", "-f", "http://localhost:8080/actuator/health" ]
+      interval: 10s
+      timeout: 10s
+      retries: 3
+      start_period: 10s
 
   cassandra:
     image: cassandra:4.1
@@ -83,6 +89,27 @@ services:
       - "8081:8081"
     networks:
       - race_network
+    healthcheck:
+      test: [ "CMD", "curl", "-f", "http://localhost:8081/actuator/health" ]
+      interval: 10s
+      timeout: 10s
+      retries: 3
+      start_period: 80s
+
+  angular-app:
+    build:
+      context: .
+      dockerfile: race_application_client_application/Dockerfile
+    container_name: angular_app
+    ports:
+      - "80:80"
+    networks:
+      - race_network
+    depends_on:
+      command-service:
+        condition: service_healthy
+      query-service:
+        condition: service_healthy
 
 networks:
   race_network:

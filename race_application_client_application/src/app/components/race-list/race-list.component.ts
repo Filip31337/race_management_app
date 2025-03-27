@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { race } from 'rxjs';
 import { Race } from 'src/app/models/race.model';
+import { AuthService } from 'src/app/services/auth.service';
 import { RaceService } from 'src/app/services/race.service';
 
 @Component({
@@ -13,9 +14,13 @@ export class RaceListComponent implements OnInit {
   
   races: Race[] = [];
 
-  constructor(private raceService: RaceService, private router: Router) {}
+  constructor(private raceService: RaceService, private router: Router, public authService: AuthService) {}
 
   ngOnInit(): void {
+    this.loadRaces();
+  }
+
+  private loadRaces(): void {
     this.raceService.getAllRaces().subscribe(races => this.races = races);
   }
 
@@ -23,13 +28,16 @@ export class RaceListComponent implements OnInit {
     this.router.navigate(['/application/new'], { queryParams: { raceId } });
   }
 
-  update(raceId: string): void {
-    this.router.navigate(['/race/edit', { queryParams: { raceId } }]);
+  update(race: Race): void {
+    this.router.navigate(['/race/edit'], {
+      state: { race }
+    });
   }
 
   remove(raceId: string): void {
-    console.log("TODO: deleting race with id: " + raceId);
-    // todo delete api amn refresh list
+    this.raceService.deleteRace(raceId).subscribe(() => {
+      this.router.navigate(['/races']);
+    });
   }
 
   createRace(): void {

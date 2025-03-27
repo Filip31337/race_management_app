@@ -25,7 +25,7 @@ public class SecurityConfig {
 
     private final JwtUtil jwtUtil;
 
-    @Value("${allowed.origin:http://angular-app}")
+    @Value("${allowed.origin:http://localhost}")
     private String allowedOrigin;
 
     public SecurityConfig(JwtUtil jwtUtil) {

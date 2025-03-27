@@ -3,6 +3,7 @@ package org.brajnovic.config;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Bean;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.web.SecurityFilterChain;
@@ -25,7 +26,7 @@ public class SecurityConfig {
 
     private final JwtUtil jwtUtil;
 
-    @Value("${allowed.origin:http://race_application_client_application}")
+    @Value("${allowed.origin:http://localhost}")
     private String allowedOrigin;
 
     public SecurityConfig(JwtUtil jwtUtil) {
@@ -40,6 +41,7 @@ public class SecurityConfig {
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/auth/**").permitAll()
                         .requestMatchers("/actuator/health").permitAll()
+                        .requestMatchers(HttpMethod.POST, "/command-service-api/applications").hasRole("APPLICANT")
                         .requestMatchers("/command-service-api/**").hasRole("ADMINISTRATOR")
                         .anyRequest().authenticated()
                 )

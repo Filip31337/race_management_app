@@ -9,7 +9,7 @@ import { RaceFormComponent } from './components/race-form/race-form.component';
 import { ApplicationFormComponent } from './components/application-form/application-form.component';
 import { ApplicationListComponent } from './components/application-list/application-list.component';
 import { LoginComponent } from './components/login/login.component';
-import { HttpClientModule } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
@@ -20,6 +20,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { BottomNavbarComponent } from './components/bottom-navbar/bottom-navbar.component';
+import { TokenInterceptor } from './token.interceptor';
 
 @NgModule({
   declarations: [
@@ -46,7 +47,9 @@ import { BottomNavbarComponent } from './components/bottom-navbar/bottom-navbar.
     MatIconModule,
     MatToolbarModule
   ],
-  providers: [],
+  providers: [
+    { provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

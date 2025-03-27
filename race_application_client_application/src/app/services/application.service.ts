@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
 import { Application } from '../models/application.model';
 import { environment } from 'src/environments/environment';
@@ -48,7 +48,12 @@ export class ApplicationService {
   }
 
   createApplication(app: Partial<Application>): Observable<Application> {
-    return this.http.post<Application>(`${environment.commandApiUrl}/command-service-api/applications`, app);
+    const params = new HttpParams()
+    .set('firstName', app.firstName || '')
+    .set('lastName', app.lastName || '')
+    .set('club', app.club || '')
+    .set('raceId', app.raceId || '');
+    return this.http.post<Application>(`${environment.commandApiUrl}/command-service-api/applications`, null, { params });
   }
 
   deleteApplication(id: string): Observable<any> {
