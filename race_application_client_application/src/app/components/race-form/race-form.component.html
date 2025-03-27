@@ -1,0 +1,28 @@
+<div class="race-form-container">
+  <mat-card class="race-form-card">
+    <mat-card-title>Create Race</mat-card-title>
+    <mat-card-content>
+      <form (ngSubmit)="submit()">
+        <mat-form-field appearance="fill" class="full-width">
+          <mat-label>Race Name</mat-label>
+          <input matInput [(ngModel)]="race.name" name="name" required>
+        </mat-form-field>
+        <mat-form-field appearance="fill" class="full-width">
+          <mat-label>Distance</mat-label>
+          <mat-select [(ngModel)]="race.distance" name="distance" required>
+            <mat-option value="5K">5K</mat-option>
+            <mat-option value="10K">10K</mat-option>
+            <mat-option value="HalfMarathon">HalfMarathon</mat-option>
+            <mat-option value="Marathon">Marathon</mat-option>
+          </mat-select>
+        </mat-form-field>
+        <div class="actions">
+          <button mat-raised-button color="primary" type="submit">Create Race</button>
+          <button mat-button (click)="router.navigate(['/races'])">Cancel</button>
+        </div>
+      </form>
+    </mat-card-content>
+  </mat-card>
+</div>
+
+  

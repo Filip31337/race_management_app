@@ -1,0 +1,15 @@
+<div class="application-list-container">
+  <h2>Applications</h2>
+  <div class="application-cards">
+    <mat-card *ngFor="let app of applications" class="application-card">
+      <mat-card-title class="padding-left-2vw">{{ app.firstName }} {{ app.lastName }}</mat-card-title>
+      <mat-card-content>
+        <p>Race ID: {{ app.raceId }}</p>
+      </mat-card-content>
+      <mat-card-actions>
+        <button mat-button color="primary" (click)="viewApplication(app.id)">View</button>
+        <button mat-button color="warn" (click)="deleteApplication(app.id)">Delete</button>
+      </mat-card-actions>
+    </mat-card>
+  </div>
+</div>

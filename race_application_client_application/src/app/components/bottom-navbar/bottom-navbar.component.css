@@ -1,0 +1,20 @@
+.bottom-navbar {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    padding: 0 16px;
+    box-shadow: 0 -2px 5px rgba(0,0,0,0.2);
+  }
+  
+  .user-info {
+    display: flex;
+    flex-direction: row;
+    gap: 3vw;
+  }
+  
+  .spacer {
+    flex: 1 1 auto;
+  }
+  

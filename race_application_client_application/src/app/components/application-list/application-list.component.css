@@ -1,0 +1,23 @@
+.application-list-container {
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .application-cards {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 16px;
+  }
+  
+  .application-card {
+    width: 100%;
+    max-width: 400px;
+  }
+
+  .padding-left-2vw {
+    padding-left: 2vw;
+  }
+  

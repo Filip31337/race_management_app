@@ -1,0 +1,21 @@
+<div class="race-list-container">
+  <h2>Races</h2>
+  <div class="race-cards">
+    <mat-card *ngFor="let race of races" class="race-card">
+      <mat-card-title class="padding-left-2vw">{{ race.name }}</mat-card-title>
+      <mat-card-content>
+        <p>Distance: {{ race.distance }}</p>
+      </mat-card-content>
+      <mat-card-actions>
+        <button mat-button color="primary" (click)="apply(race.id)">Apply</button>
+        <button mat-button color="secondary" (click)="update(race.id)">Update</button>
+        <button mat-button color="secondary" (click)="remove(race.id)">Remove</button>
+      </mat-card-actions>
+    </mat-card>
+    <mat-card class="race-card align-items-center">
+      <mat-card-actions>
+        <button mat-raised-button color="primary" (click)="createRace()">Create New Race</button>
+      </mat-card-actions>
+    </mat-card>
+  </div>
+</div>
