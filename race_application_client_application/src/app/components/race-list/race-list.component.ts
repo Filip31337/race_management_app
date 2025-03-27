@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { race } from 'rxjs';
 import { Race } from 'src/app/models/race.model';
 import { AuthService } from 'src/app/services/auth.service';
 import { RaceService } from 'src/app/services/race.service';
@@ -29,14 +28,12 @@ export class RaceListComponent implements OnInit {
   }
 
   update(race: Race): void {
-    this.router.navigate(['/race/edit'], {
-      state: { race }
-    });
+    this.router.navigate(['/race/edit', race.id]);
   }
 
   remove(raceId: string): void {
     this.raceService.deleteRace(raceId).subscribe(() => {
-      this.router.navigate(['/races']);
+      this.loadRaces();
     });
   }
 

@@ -14,28 +14,43 @@ import { Location } from '@angular/common';
 export class ApplicationFormComponent implements OnInit {
   races: Race[] = [];
   application: Partial<Application> = { firstName: '', lastName: '', club: '', raceId: '' };
+  isViewMode = false;
 
   constructor(
     private applicationService: ApplicationService, 
     private raceService: RaceService, 
     public router: Router, 
     private route: ActivatedRoute, 
-    private location: Location) {}
+    private location: Location
+  ) {}
 
   ngOnInit(): void {
     this.raceService.getAllRaces().subscribe(races => {
       this.races = races;
-      const raceIdFromQuery = this.route.snapshot.queryParamMap.get('raceId');
-      if (raceIdFromQuery) {
-        this.application.raceId = raceIdFromQuery;
+      if (!this.route.snapshot.paramMap.get('id')) {
+        const raceIdFromQuery = this.route.snapshot.queryParamMap.get('raceId');
+        if (raceIdFromQuery) {
+          this.application.raceId = raceIdFromQuery;
+        }
       }
     });
+
+    const id = this.route.snapshot.paramMap.get('id');
+    if (id) {
+      this.isViewMode = true;
+      this.applicationService.getApplication(id).subscribe({
+        next: appData => this.application = appData,
+        error: err => console.error('Error loading application:', err)
+      });
+    }
   }
 
   submit(): void {
-    this.applicationService.createApplication(this.application).subscribe(() => {
-      this.router.navigate(['/applications']);
-    });
+    if (!this.isViewMode) {
+      this.applicationService.createApplication(this.application).subscribe(() => {
+        this.router.navigate(['/races']);
+      });
+    }
   }
 
   goBack() {

@@ -28,4 +28,7 @@ public class Application {
 
     @Column(nullable = false)
     private UUID raceId;
+
+    @Column(name = "user_email", nullable = true, length = 255)
+    private String userEmail;
 }

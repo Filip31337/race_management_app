@@ -1,31 +1,35 @@
 <div class="application-form-container">
   <mat-card class="application-form-card">
-    <mat-card-title class="text-align-center">Apply to a Race</mat-card-title>
+      <mat-card-title *ngIf="!isViewMode" class="padding-left-2vw">Apply to a race</mat-card-title>
+      <mat-card-title *ngIf="isViewMode" class="padding-left-2vw">View Application</mat-card-title>
     <mat-card-content>
       <form (ngSubmit)="submit()">
         <mat-form-field appearance="fill" class="full-width">
           <mat-label>First Name</mat-label>
-          <input matInput type="text" [(ngModel)]="application.firstName" name="firstName" required>
+          <input matInput type="text" [(ngModel)]="application.firstName" name="firstName" required [disabled]="isViewMode">
         </mat-form-field>
         <mat-form-field appearance="fill" class="full-width">
           <mat-label>Last Name</mat-label>
-          <input matInput type="text" [(ngModel)]="application.lastName" name="lastName" required>
+          <input matInput type="text" [(ngModel)]="application.lastName" name="lastName" required [disabled]="isViewMode">
         </mat-form-field>
         <mat-form-field appearance="fill" class="full-width">
           <mat-label>Club</mat-label>
-          <input matInput type="text" [(ngModel)]="application.club" name="club">
+          <input matInput type="text" [(ngModel)]="application.club" name="club" [disabled]="isViewMode">
         </mat-form-field>
         <mat-form-field appearance="fill" class="full-width">
           <mat-label>Race</mat-label>
-          <mat-select [(ngModel)]="application.raceId" name="raceId" required>
+          <mat-select [(ngModel)]="application.raceId" name="raceId" required [disabled]="isViewMode">
             <mat-option *ngFor="let race of races" [value]="race.id">
               {{ race.name }} - {{ race.distance }}
             </mat-option>
           </mat-select>
         </mat-form-field>
-        <div class="actions">
-          <button mat-raised-button color="primary" type="submit">Submit Application</button>
+        <div class="actions" *ngIf="!isViewMode">
+          <button mat-raised-button color="primary" type="button" (click)="submit()">Submit</button>
           <button mat-button type="button" (click)="goBack()">Cancel</button>
+        </div>
+        <div class="actions" *ngIf="isViewMode">
+          <button mat-button type="button" (click)="goBack()">Back</button>
         </div>
       </form>
     </mat-card-content>

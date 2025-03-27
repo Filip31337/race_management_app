@@ -117,4 +117,23 @@
         </update>
     </changeSet>
 
+    <changeSet id="7-add-user-email-to-application" author="brajnovic" dbms="postgresql">
+        <addColumn tableName="application" schemaName="race_management">
+            <column name="user_email" type="varchar(255)">
+                <constraints nullable="true"/>
+            </column>
+        </addColumn>
+    </changeSet>
+
+    <changeSet id="8-update-existing-applications-with-email" author="brajnovic" dbms="postgresql">
+        <update tableName="application" schemaName="race_management">
+            <column name="user_email" value="luka.modric@example.com"/>
+            <where>id = '33333333-3333-3333-3333-333333333333'</where>
+        </update>
+        <update tableName="application" schemaName="race_management">
+            <column name="user_email" value="jacques.houdek@example.com"/>
+            <where>id = '44444444-4444-4444-4444-444444444444'</where>
+        </update>
+    </changeSet>
+
 </databaseChangeLog>

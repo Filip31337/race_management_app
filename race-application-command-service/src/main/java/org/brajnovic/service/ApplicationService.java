@@ -5,6 +5,7 @@ import org.brajnovic.event.ApplicationCreatedEvent;
 import org.brajnovic.event.ApplicationDeletedEvent;
 import org.brajnovic.event.ApplicationEvent;
 import org.brajnovic.repository.ApplicationRepository;
+import org.brajnovic.util.SecurityUtils;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Service;
 import java.util.UUID;
@@ -23,19 +24,23 @@ public class ApplicationService {
     }
 
     public Application createApplication(String firstName, String lastName, String club, UUID raceId) {
+        String userEmail = SecurityUtils.getCurrentUserEmail();
+
         Application application = new Application();
         application.setId(UUID.randomUUID());
         application.setFirstName(firstName);
         application.setLastName(lastName);
         application.setClub(club);
         application.setRaceId(raceId);
+        application.setUserEmail(userEmail);
         applicationRepository.save(application);
 
         ApplicationCreatedEvent event = new ApplicationCreatedEvent(
                 application.getId(),
                 application.getFirstName(),
                 application.getLastName(),
-                application.getRaceId()
+                application.getRaceId(),
+                application.getUserEmail()
         );
         kafkaTemplate.send("application-events", event);
 

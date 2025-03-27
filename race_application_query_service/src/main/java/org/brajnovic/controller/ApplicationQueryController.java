@@ -2,6 +2,7 @@ package org.brajnovic.controller;
 
 import org.brajnovic.entity.ApplicationById;
 import org.brajnovic.repository.ApplicationByIdRepository;
+import org.brajnovic.util.SecurityUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -28,6 +29,11 @@ public class ApplicationQueryController {
     @GetMapping("/{id}")
     public ApplicationById getApplication(@PathVariable UUID id) {
         return applicationByIdRepository.findById(id).orElse(null);
+    }
+
+    @GetMapping("/user")
+    public List<ApplicationById> getMyApplications() {
+        return applicationByIdRepository.findByUserEmail(SecurityUtils.getCurrentUserEmail());
     }
 
 }

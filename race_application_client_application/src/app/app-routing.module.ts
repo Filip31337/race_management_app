@@ -16,7 +16,7 @@ const routes: Routes = [
     data: { requiredRole: 'ROLE_ADMINISTRATOR' } 
   },
   { 
-    path: 'race/edit', component: RaceFormComponent,
+    path: 'race/edit/:id', component: RaceFormComponent,
     canActivate: [AuthGuard],
     data: { requiredRole: 'ROLE_ADMINISTRATOR' }
   },
@@ -26,6 +26,7 @@ const routes: Routes = [
     data: { requiredRole: 'ROLE_ADMINISTRATOR' } 
   },
   { path: 'application/new', component: ApplicationFormComponent},
+  { path: 'application/details/:id', component: ApplicationFormComponent },
   { path: 'my-applications', component: ApplicationListComponent },
   { path: '', redirectTo: '/login', pathMatch: 'full' },
   { path: '**', redirectTo: '/login' }

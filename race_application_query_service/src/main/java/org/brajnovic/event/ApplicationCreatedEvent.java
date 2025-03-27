@@ -12,16 +12,20 @@ public class ApplicationCreatedEvent extends ApplicationEvent {
 
     private final UUID raceId;
 
+    private final String userEmail;
+
     @JsonCreator
     public ApplicationCreatedEvent(
             @JsonProperty("applicationId") UUID applicationId,
             @JsonProperty("firstName") String firstName,
             @JsonProperty("lastName") String lastName,
-            @JsonProperty("raceId") UUID raceId) {
+            @JsonProperty("raceId") UUID raceId,
+            @JsonProperty("userEmail") String userEmail) {
         super(applicationId, "APPLICATION_CREATED");
         this.firstName = firstName;
         this.lastName = lastName;
         this.raceId = raceId;
+        this.userEmail = userEmail;
     }
 
     public String getFirstName() {
@@ -34,5 +38,9 @@ public class ApplicationCreatedEvent extends ApplicationEvent {
 
     public UUID getRaceId() {
         return raceId;
+    }
+
+    public String getUserEmail() {
+        return userEmail;
     }
 }

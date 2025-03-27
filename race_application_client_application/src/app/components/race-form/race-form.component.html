@@ -18,7 +18,8 @@
           </mat-select>
         </mat-form-field>
         <div class="actions">
-          <button mat-raised-button color="primary" type="submit">Create Race</button>
+          <button mat-raised-button color="primary" type="submit" *ngIf="!this.isEditMode">Create Race</button>
+          <button mat-raised-button color="primary" type="submit" *ngIf="this.isEditMode">Update Race</button>
           <button mat-button (click)="router.navigate(['/races'])">Cancel</button>
         </div>
       </form>

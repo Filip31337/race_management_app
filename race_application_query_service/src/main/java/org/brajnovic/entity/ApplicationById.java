@@ -16,14 +16,17 @@ public class ApplicationById {
 
     private UUID raceId;
 
+    private String userEmail;
+
     public ApplicationById() {
     }
 
-    public ApplicationById(UUID id, String firstName, String lastName, UUID raceId) {
+    public ApplicationById(UUID id, String firstName, String lastName, UUID raceId, String userEmail) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
         this.raceId = raceId;
+        this.userEmail = userEmail;
     }
 
     public UUID getId() {
@@ -56,6 +59,14 @@ public class ApplicationById {
 
     public void setRaceId(UUID raceId) {
         this.raceId = raceId;
+    }
+
+    public String getUserEmail() {
+        return userEmail;
+    }
+
+    public void setUserEmail(String userEmail) {
+        this.userEmail = userEmail;
     }
 }
 

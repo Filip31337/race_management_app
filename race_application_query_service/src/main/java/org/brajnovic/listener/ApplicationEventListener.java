@@ -29,7 +29,8 @@ public class ApplicationEventListener {
                     e.getApplicationId(),
                     e.getFirstName(),
                     e.getLastName(),
-                    e.getRaceId()
+                    e.getRaceId(),
+                    e.getUserEmail()
             );
             applicationByIdRepository.save(application);
         } else if (event instanceof ApplicationDeletedEvent e) {

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Race } from 'src/app/models/race.model';
 import { RaceService } from 'src/app/services/race.service';
 
@@ -15,26 +15,21 @@ export class RaceFormComponent implements OnInit {
 
   constructor(
     private raceService: RaceService, 
-    public router: Router
+    public router: Router,
+    private route: ActivatedRoute
   ) {
     
   }
 
   ngOnInit(): void {
-    const navigation = this.router.getCurrentNavigation();
-    const stateRace = navigation?.extras?.state?.['race'];
-
-    if (stateRace) {
-      this.populateForm(stateRace);
-      return;
-    } else {
-      console.warn('No initial race data found in navigation state');
+    const raceId = this.route.snapshot.paramMap.get('id');
+    if (raceId) {
+      this.isEditMode = true;
+      this.raceService.getRace(raceId).subscribe({
+        next: raceData => this.race = raceData,
+        error: err => console.error('Error fetching race data:', err)
+      });
     }
-  }
-
-  private populateForm(raceData: Race): void {
-    this.race = { ...raceData };
-    this.isEditMode = true;
   }
   
   submit(): void {

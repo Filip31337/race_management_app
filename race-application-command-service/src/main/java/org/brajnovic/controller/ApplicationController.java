@@ -3,6 +3,8 @@ package org.brajnovic.controller;
 import org.brajnovic.entity.Application;
 import org.brajnovic.service.ApplicationService;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 import java.util.UUID;
 
 @RestController

@@ -10,11 +10,14 @@ public class ApplicationCreatedEvent extends ApplicationEvent {
 
     private final UUID raceId;
 
-    public ApplicationCreatedEvent(UUID applicationId, String firstName, String lastName, UUID raceId) {
+    private final String userEmail;
+
+    public ApplicationCreatedEvent(UUID applicationId, String firstName, String lastName, UUID raceId, String userEmail) {
         super(applicationId, "APPLICATION_CREATED");
         this.firstName = firstName;
         this.lastName = lastName;
         this.raceId = raceId;
+        this.userEmail = userEmail;
     }
 
     public String getFirstName() {
@@ -27,5 +30,9 @@ public class ApplicationCreatedEvent extends ApplicationEvent {
 
     public UUID getRaceId() {
         return raceId;
+    }
+
+    public String getUserEmail() {
+        return userEmail;
     }
 }
