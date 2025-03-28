@@ -1,11 +1,10 @@
 export const environment = {
     production: true,
-    commandApiUrl: 'http://localhost:8080',
-    queryApiUrl: 'http://localhost:8081',
+    commandApiUrl: '/api/command',
+    queryApiUrl: '/api/query',
     mockTokens: {
       admin: '',
       expiredAdmin: '',
       applicant: ''
     }
   };
-  
