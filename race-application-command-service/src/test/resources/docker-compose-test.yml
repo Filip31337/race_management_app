@@ -1,0 +1,104 @@
+services:
+  postgres:
+    image: postgres:15
+    environment:
+      POSTGRES_USER: test
+      POSTGRES_PASSWORD: test
+      POSTGRES_DB: test_race_management
+    ports:
+      - "5432:5432"
+    command: ["postgres", "-c", "fsync=off"]
+    networks:
+      - race_test_network
+
+  zookeeper:
+    image: confluentinc/cp-zookeeper:7.4.0
+    environment:
+      ZOOKEEPER_CLIENT_PORT: 2181
+      ZOOKEEPER_TICK_TIME: 2000
+    ports:
+      - "2181:2181"
+    networks:
+      - race_test_network
+
+  kafka:
+    image: confluentinc/cp-kafka:7.4.0
+    depends_on:
+      - zookeeper
+    environment:
+      KAFKA_BROKER_ID: 1
+      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
+      KAFKA_LISTENERS: PLAINTEXT://0.0.0.0:9092
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://localhost:9092
+      KAFKA_AUTO_CREATE_TOPICS_ENABLE: 'true'
+      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
+      KAFKA_TRANSACTION_STATE_LOG_REPLICATION_FACTOR: 1
+    ports:
+      - "9092:9092"
+    networks:
+      - race_test_network
+
+  cassandra:
+    image: cassandra:4.1
+    environment:
+      CASSANDRA_START_RPC: "true"
+      CASSANDRA_RPC_PORT: 9160
+      CASSANDRA_KEYSPACE: test_keyspace
+    ports:
+      - "9042:9042"
+    command: ["cassandra", "-f", "--cluster_name=TestCluster"]
+    networks:
+      - race_test_network
+
+  command-service:
+    build:
+      context: ../../../..
+      dockerfile: race-application-command-service/Dockerfile
+    environment:
+      SPRING_PROFILES_ACTIVE: test
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/test_race_management
+      SPRING_DATASOURCE_USERNAME: test
+      SPRING_DATASOURCE_PASSWORD: test
+      SPRING_KAFKA_BOOTSTRAP_SERVERS: kafka:9092
+    ports:
+      - "8080:8080"
+    depends_on:
+      - postgres
+      - kafka
+    networks:
+      - race_test_network
+
+  query-service:
+    build:
+      context: ../../../..
+      dockerfile: race_application_query_service/Dockerfile
+    environment:
+      SPRING_PROFILES_ACTIVE: test
+      SPRING_KAFKA_BOOTSTRAP_SERVERS: kafka:9092
+      SPRING_DATA_CASSANDRA_CONTACT_POINTS: cassandra
+      SPRING_DATA_CASSANDRA_PORT: 9042
+      SPRING_DATA_CASSANDRA_KEYSPACE_NAME: test_keyspace
+    ports:
+      - "8081:8081"
+    depends_on:
+      - kafka
+      - cassandra
+    networks:
+      - race_test_network
+
+  angular-app:
+    build:
+      context: ../../../..
+      dockerfile: race_application_client_application/Dockerfile
+    ports:
+      - "80:80"
+    depends_on:
+      - command-service
+      - query-service
+    networks:
+      - race_test_network
+
+networks:
+  race_test_network:
+    driver: bridge
+
