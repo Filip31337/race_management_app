@@ -1,9 +1,6 @@
 package org.brajnovic.e2e;
 
-import org.junit.jupiter.api.MethodOrderer;
-import org.junit.jupiter.api.Order;
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.TestMethodOrder;
+import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.DynamicPropertyRegistry;
@@ -20,6 +17,7 @@ import static org.junit.Assert.assertTrue;
 import java.io.File;
 import java.time.Duration;
 
+@Tag("e2e")
 @Slf4j
 @SpringBootTest
 @ExtendWith(SpringExtension.class)
@@ -48,11 +46,11 @@ class BaseE2ETest {
 					Wait.forLogMessage(".*database system is ready to accept connections.*", 1)
 							.withStartupTimeout(Duration.ofMinutes(2)))
 			.withExposedService("zookeeper", 2181,
-					Wait.forLogMessage(".*binding to port.*", 1)
-							.withStartupTimeout(Duration.ofMinutes(2)))
+					Wait.forListeningPort()
+							.withStartupTimeout(Duration.ofMinutes(3)))
 			.withExposedService("kafka", 9092,
 					Wait.forLogMessage(".*topicName='race-events'.*", 1)
-							.withStartupTimeout(Duration.ofMinutes(2)))
+							.withStartupTimeout(Duration.ofMinutes(3)))
 			.withExposedService("cassandra", 9042,
 								Wait.forLogMessage(".*Starting listening for CQL clients.*", 1)
                             .withStartupTimeout(Duration.ofMinutes(2)))

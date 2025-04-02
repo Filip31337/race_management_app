@@ -1,5 +1,6 @@
 package org.brajnovic.unit;
 
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import org.brajnovic.service.ApplicationService;
 import org.brajnovic.service.RaceService;
@@ -16,6 +17,7 @@ import static org.mockito.Mockito.*;
 
 import java.util.UUID;
 
+@Tag("unit")
 class UnitTests extends BaseUnitTest {
 
     @Mock

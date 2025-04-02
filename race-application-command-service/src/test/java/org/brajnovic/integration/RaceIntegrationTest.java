@@ -5,6 +5,7 @@ import org.brajnovic.entity.RaceDistance;
 import org.brajnovic.event.*;
 import org.brajnovic.repository.RaceRepository;
 import org.brajnovic.service.RaceService;
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentCaptor;
 import org.mockito.Captor;
@@ -17,6 +18,7 @@ import java.util.UUID;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
+@Tag("integration")
 public class RaceIntegrationTest extends BaseIntegrationTest<RaceEvent> {
 
     @Mock

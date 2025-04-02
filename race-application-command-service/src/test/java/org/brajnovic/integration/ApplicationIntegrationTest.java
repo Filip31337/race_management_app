@@ -5,6 +5,7 @@ import org.brajnovic.event.*;
 import org.brajnovic.repository.ApplicationRepository;
 import org.brajnovic.service.ApplicationService;
 import org.brajnovic.util.SecurityUtils;
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentCaptor;
 import org.mockito.Captor;
@@ -16,6 +17,7 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.*;
 
+@Tag("integration")
 public class ApplicationIntegrationTest extends BaseIntegrationTest<ApplicationEvent> {
 
 

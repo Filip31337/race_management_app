@@ -59,6 +59,41 @@ http://localhost/
 Mocked credentials:
 - admin@admin.com:admin
 - user@user.com:user
-- 
-### 5. Possible problems
+
+### 5. Testing
+Application BE services are using Unit, Integration and E2E tests. To run them use maven-surefire-plugin.
+
+##Usage
+
+To run tests position yourself into command service root of BE service, IE:
+
+```bash
+cd race-application-command-service
+```
+
+To run Unit tests run command:
+
+```bash
+mvn test -Punit
+```
+
+To run Integration tests run command:
+
+```bash
+mvn test -Pintegration
+```
+
+To run E2E tests run or use command:
+
+```bash
+mvn test -Pe2e
+```
+
+To run all tests run or use command:
+
+```bash
+mvn test -Pall
+```
+
+### 6. Possible problems
 - EOL characters on nginix config, should be LF for linux, but windows might declare it CRLF after git clone, the fix is to open the config in any text editor and save as LF EOL character based

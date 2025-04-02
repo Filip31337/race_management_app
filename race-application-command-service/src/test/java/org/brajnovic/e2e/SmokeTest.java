@@ -15,6 +15,7 @@ import java.util.UUID;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+@Tag("e2e")
 @Slf4j
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @Testcontainers
@@ -165,14 +166,5 @@ public class SmokeTest extends BaseE2ETest {
         assertThat(response.getBody()).isNotNull();
         Race[] races = response.getBody();
         assertThat(races).hasSize(3);
-    }
-
-    @Test
-    @Order(8)
-    @Disabled
-    void createTimeForPostman() throws InterruptedException {
-        Thread.sleep(15 * 60_000);
-
-        assertThat("bla").isEqualTo("bla");
     }
 }
